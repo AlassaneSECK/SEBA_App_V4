@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">SEBA</string>
+
+
+    <string name="ph">ph</string>
+    <string name="alcalinite">alcalinite</string>
+    <string name="ajouter_releve">Ajouter un releve</string>
+    <string name="plus">+</string>
+    <string name="icon_edit_content_description">Modifier le releve</string>
+    <string name="icon_delete_content_description">Supprimer un releve</string>
+    <string name="update">Modifier</string>
+    <string name="prendre_photo">prendre une photo</string>
+    <string name="nom">lieu</string>
+    <string name="debit">débit</string>
+    <string name="temperature">température</string>
+    <string name="conductivite_electrique">conductivité électrique</string>
+    <string name="turbidite">turbidité</string>
+    <string name="niveaux_oxygen_dissous">niveau oxygene dissous</string>
+    <string name="nitrate_phosphate">nitrate et phosphate</string>
+    <string name="metaux_lourd">métaux lourd</string>
+    <string name="substances_organiques">substances organiques</string>
+    <string name="chlorophylle">chlorophylle</string>
+    <string name="micros_organismes">micros organismes</string>
+    <string name="title_activity_ajouter_releve">Ajouter_releve</string>
+</resources>
