@@ -4,8 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.seba_app_v4.bddLocale.Valeur
 import com.example.seba_app_v4.databinding.ActivityDetailBinding
 import com.michael.sqlite.bdd.Releve
 import com.michael.sqlite.bdd.RelevesCRUD
@@ -18,27 +22,113 @@ import java.util.Date
 
 class Detail : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
+    val valeur: Valeur? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
-        val releve: Releve = intent.getSerializableExtra("releve") as Releve
+        val releve = intent.getSerializableExtra("releve") as? Releve
+
+        var lavaleur = intent.getSerializableExtra("valeur") as? Valeur
+        Toast.makeText(this, "La valeur est de : ${lavaleur?.laValeur}", Toast.LENGTH_LONG).show()
+
+
         binding.apply {
-//            nom.isFocusable = false
-//            nom.isClickable = false
-            nom.setText(releve.nom)
-            ph.setText(releve.ph)
-            debit.setText(releve.debit)
-            temperature.setText(releve.temperature)
-            conductiviteElectrique.setText(releve.conductivite_electrique)
-            turbidite.setText(releve.turbidite)
-            niveauxOxygenDissous.setText(releve.niveaux_oxygen_dissous)
-            nitratePhosphate.setText(releve.nitrate_phophate)
-            metauxLourd.setText(releve.metaux_lourd)
-            substancesOrganiques.setText(releve.substances_organiques)
-            microsOrganismes.setText(releve.micros_organismes)
-            chlorophylle.setText(releve.chlorophylle)
+
+
+            nom.isFocusable = false
+            nom.isClickable = false
+            findAllEditText(rootView,lavaleur?.laValeur.toString())
+
+
+            ph.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    ph.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            debit.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    debit.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            temperature.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    temperature.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            conductiviteElectrique.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    conductiviteElectrique.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            turbidite.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    turbidite.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            niveauxOxygenDissous.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    niveauxOxygenDissous.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            nitratePhosphate.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    nitratePhosphate.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            metauxLourd.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    metauxLourd.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            substancesOrganiques.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    substancesOrganiques.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+
+            microsOrganismes.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    microsOrganismes.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+            chlorophylle.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
+                if (hasfocus){
+                    chlorophylle.setText(lavaleur?.laValeur)
+                    lavaleur = Valeur("")
+                }
+            }
+            nom.setText(releve?.nom)
+            ph.setText(releve?.ph)
+            debit.setText(releve?.debit)
+            temperature.setText(releve?.temperature)
+            conductiviteElectrique.setText(releve?.conductivite_electrique)
+            turbidite.setText(releve?.turbidite)
+            niveauxOxygenDissous.setText(releve?.niveaux_oxygen_dissous)
+            nitratePhosphate.setText(releve?.nitrate_phophate)
+            metauxLourd.setText(releve?.metaux_lourd)
+            substancesOrganiques.setText(releve?.substances_organiques)
+            microsOrganismes.setText(releve?.micros_organismes)
+            chlorophylle.setText(releve?.chlorophylle)
 
             enregistrer.setOnClickListener {
                 val relevesCRUD = RelevesCRUD(this@Detail)
@@ -46,7 +136,7 @@ class Detail : AppCompatActivity() {
                 val currentDate = Date()
                 val formattedDate = dateFormat.format(currentDate)
                 relevesCRUD.updateReleve(
-                    releve.id,
+                    releve?.id,
                     ph.text.toString(),
                     debit.text.toString(),
                     temperature.text.toString(),
@@ -65,7 +155,7 @@ class Detail : AppCompatActivity() {
             }
             supprimer.setOnClickListener {
                 val relevesCRUD = RelevesCRUD(this@Detail)
-                relevesCRUD.deleteReleve(releve.id)
+                relevesCRUD.deleteReleve(releve?.id)
                 finish()
             }
             retour.setOnClickListener {
@@ -73,66 +163,27 @@ class Detail : AppCompatActivity() {
                     startActivity(it)
                 }
             }
+            btReconnaissance.setOnClickListener {
+                Intent(this@Detail, OCR::class.java).putExtra("releve",releve).also {
+                    startActivity(it)
+                }
+            }
         }
     }
-//
-//    override fun onResume() {
-//        Log.e("DETAIL", "onResume")
-//        val releve: Releve = intent.getSerializableExtra("releve") as Releve
-//        binding.apply {
-//            nom.setText(releve.nom)
-//            ph.setText(releve.ph)
-//            debit.setText(releve.debit)
-//            temperature.setText(releve.temperature)
-//            conductiviteElectrique.setText(releve.conductivite_electrique)
-//            turbidite.setText(releve.turbidite)
-//            niveauxOxygenDissous.setText(releve.niveaux_oxygen_dissous)
-//            nitratePhosphate.setText(releve.nitrate_phophate)
-//            metauxLourd.setText(releve.metaux_lourd)
-//            substancesOrganiques.setText(releve.substances_organiques)
-//            microsOrganismes.setText(releve.micros_organismes)
-//            chlorophylle.setText(releve.chlorophylle)
-//        }
-//        super.onResume()
-//    }
-//
-//    override fun onDestroy() {
-//        Log.e("DETAIL", "onDestroy")
-//        val releve: Releve = intent.getSerializableExtra("releve") as Releve
-//        binding.apply {
-//            nom.setText(releve.nom)
-//            ph.setText(releve.ph)
-//            debit.setText(releve.debit)
-//            temperature.setText(releve.temperature)
-//            conductiviteElectrique.setText(releve.conductivite_electrique)
-//            turbidite.setText(releve.turbidite)
-//            niveauxOxygenDissous.setText(releve.niveaux_oxygen_dissous)
-//            nitratePhosphate.setText(releve.nitrate_phophate)
-//            metauxLourd.setText(releve.metaux_lourd)
-//            substancesOrganiques.setText(releve.substances_organiques)
-//            microsOrganismes.setText(releve.micros_organismes)
-//            chlorophylle.setText(releve.chlorophylle)
-//        }
-//        super.onDestroy()
-//    }
-//
-//    override fun onPause() {
-//        Log.e("DETAIL", "onPause")
-//        val releve: Releve = intent.getSerializableExtra("releve") as Releve
-//        binding.apply {
-//            nom.setText(releve.nom)
-//            ph.setText(releve.ph)
-//            debit.setText(releve.debit)
-//            temperature.setText(releve.temperature)
-//            conductiviteElectrique.setText(releve.conductivite_electrique)
-//            turbidite.setText(releve.turbidite)
-//            niveauxOxygenDissous.setText(releve.niveaux_oxygen_dissous)
-//            nitratePhosphate.setText(releve.nitrate_phophate)
-//            metauxLourd.setText(releve.metaux_lourd)
-//            substancesOrganiques.setText(releve.substances_organiques)
-//            microsOrganismes.setText(releve.micros_organismes)
-//            chlorophylle.setText(releve.chlorophylle)
-//        }
-//        super.onPause()
-//    }
+
+    private fun findAllEditText(view: View, lavaleur : String?) {
+        var value : String? = lavaleur
+        if (view is EditText) {
+            view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    view.setText(value)
+                }
+            }
+        } else if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                findAllEditText(child, lavaleur)
+            }
+        }
+    }
 }

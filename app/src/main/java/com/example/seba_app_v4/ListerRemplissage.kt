@@ -3,14 +3,11 @@ package com.example.seba_app_v4
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.ListView
 import androidx.databinding.DataBindingUtil
 import com.example.seba_app_v4.adapter.ReleveAdapter
-import com.example.seba_app_v4.adapter.SearchReleveAdapter
 import com.example.seba_app_v4.databinding.ActivityListerRemplissageBinding
 import com.michael.sqlite.bdd.Releve
 import com.michael.sqlite.bdd.RelevesCRUD
@@ -18,12 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.io.PrintWriter
-import java.net.Socket
-import java.util.Random
+
 
 class ListerRemplissage : AppCompatActivity() {
     private lateinit var binding: ActivityListerRemplissageBinding
@@ -66,21 +58,6 @@ class ListerRemplissage : AppCompatActivity() {
                 squareContainer.visibility = View.INVISIBLE
                 listView.visibility = View.VISIBLE
             }
-            val releveList = RelevesCRUD(this@ListerRemplissage).readAllReleve()
-            val adapter = SearchReleveAdapter(this@ListerRemplissage, releveList)
-            binding.listView.adapter = adapter
-
-            // Ajout du TextWatcher à la barre de recherche
-            binding.searchEditText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    // Filtrer la liste à chaque fois que le texte change
-                    adapter.filter.filter(s)
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-            })
         }
     }
 

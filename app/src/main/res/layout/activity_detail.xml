@@ -23,7 +23,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/rootView">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -39,6 +40,7 @@
                             android:id="@+id/nom"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -53,10 +55,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/ph"/>
+
                         <EditText
                             android:id="@+id/ph"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
                     </LinearLayout>
 
@@ -75,6 +79,7 @@
                             android:id="@+id/debit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
                     </LinearLayout>
 
@@ -92,6 +97,7 @@
                             android:id="@+id/temperature"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
                     </LinearLayout>
@@ -105,10 +111,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/conductivite_electrique"/>
+
                         <EditText
                             android:id="@+id/conductivite_electrique"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -128,6 +136,7 @@
                             android:id="@+id/turbidite"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -147,6 +156,7 @@
                             android:id="@+id/niveaux_oxygen_dissous"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -166,6 +176,7 @@
                             android:id="@+id/nitrate_phosphate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -187,6 +198,7 @@
                             android:id="@+id/metaux_lourd"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:inputType="numberDecimal" />
 
 
@@ -207,7 +219,8 @@
                             android:id="@+id/substances_organiques"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"/>
+                            android:clickable="true"
+                            android:inputType="numberDecimal" />
 
 
                     </LinearLayout>
@@ -227,7 +240,8 @@
                             android:id="@+id/micros_organismes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"/>
+                            android:clickable="true"
+                            android:inputType="numberDecimal" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -238,19 +252,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/chlorophylle"/>
+
                         <EditText
                             android:id="@+id/chlorophylle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"/>
+                            android:clickable="true"
+                            android:inputType="numberDecimal" />
 
                     </LinearLayout>
-
-
-
-
-
-
+                    <Button
+                        android:id="@+id/btReconnaissance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RECONNAISSANCE DE TEXTE"/>
 
                     <Button
                         android:id="@+id/retour"
