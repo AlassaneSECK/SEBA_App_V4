@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.seba_app_v4.R
-import com.michael.sqlite.bdd.Releve
+import com.example.seba_app_v4.modeles.Releve
 
 class ReleveAdapter (context : Context, relevebdds: List<Releve>) : ArrayAdapter<Releve>(context, 0 , relevebdds) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

@@ -2,6 +2,7 @@ package com.michael.sqlite.bdd
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.example.seba_app_v4.modeles.Releve
 
 
 class RelevesCRUD(cxt: Context) {

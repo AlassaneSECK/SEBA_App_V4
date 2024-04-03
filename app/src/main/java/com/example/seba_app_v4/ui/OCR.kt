@@ -1,4 +1,4 @@
-package com.example.seba_app_v4
+package com.example.seba_app_v4.ui
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,12 +7,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.example.seba_app_v4.bddLocale.Valeur
+import com.example.seba_app_v4.R
+import com.example.seba_app_v4.modeles.Valeur
 import com.example.seba_app_v4.databinding.ActivityOcrBinding
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.michael.sqlite.bdd.Releve
+import com.example.seba_app_v4.modeles.Releve
 
 class OCR : AppCompatActivity() {
     val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)

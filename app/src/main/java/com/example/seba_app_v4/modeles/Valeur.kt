@@ -1,4 +1,4 @@
-package com.example.seba_app_v4.bddLocale
+package com.example.seba_app_v4.modeles
 
 import java.io.Serializable
 

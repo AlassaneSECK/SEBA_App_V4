@@ -1,21 +1,18 @@
-package com.example.seba_app_v4
+package com.example.seba_app_v4.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.example.seba_app_v4.bddLocale.Valeur
+import com.example.seba_app_v4.R
+import com.example.seba_app_v4.modeles.Valeur
 import com.example.seba_app_v4.databinding.ActivityDetailBinding
-import com.michael.sqlite.bdd.Releve
+import com.example.seba_app_v4.modeles.Releve
 import com.michael.sqlite.bdd.RelevesCRUD
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 

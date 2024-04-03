@@ -1,15 +1,15 @@
-package com.example.seba_app_v4
+package com.example.seba_app_v4.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.example.seba_app_v4.R
 import com.example.seba_app_v4.databinding.ActivityEnvoiReleveBinding
 import com.google.gson.Gson
-import com.michael.sqlite.bdd.Releve
+import com.example.seba_app_v4.modeles.Releve
 import com.michael.sqlite.bdd.RelevesCRUD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,6 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.net.Socket
-import java.util.Random
 
 class Envoi_Releve : AppCompatActivity() {
     lateinit var binding: ActivityEnvoiReleveBinding
