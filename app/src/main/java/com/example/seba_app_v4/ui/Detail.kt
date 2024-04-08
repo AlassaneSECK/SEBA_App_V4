@@ -161,11 +161,36 @@ class Detail : AppCompatActivity() {
                 }
             }
             btReconnaissance.setOnClickListener {
-                Intent(this@Detail, OCR::class.java).putExtra("releve",releve).also {
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+                val currentDate = Date()
+                val formattedDate = dateFormat.format(currentDate)
+
+                val relevepassage = Releve(
+                    id = releve?.id,
+                    NomCampagne = "",
+                    nom = nom.text.toString(),
+                    ph = ph.text.toString(),
+                    debit = debit.text.toString(),
+                    temperature = temperature.text.toString(),
+                    conductivite_electrique = conductiviteElectrique.text.toString(),
+                    turbidite = turbidite.text.toString(),
+                    niveaux_oxygen_dissous = niveauxOxygenDissous.text.toString(),
+                    nitrate_phophate = nitratePhosphate.text.toString(),
+                    metaux_lourd = metauxLourd.text.toString(),
+                    substances_organiques = substancesOrganiques.text.toString(),
+                    micros_organismes = microsOrganismes.text.toString(),
+                    chlorophylle = chlorophylle.text.toString(),
+                    horodatage = ""
+                )
+                Intent(this@Detail, OCR::class.java).putExtra("releve",relevepassage).also {
                     startActivity(it)
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun findAllEditText(view: View, lavaleur : String?) {

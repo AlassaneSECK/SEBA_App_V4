@@ -20,6 +20,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
+import java.lang.reflect.Array
 import java.net.Socket
 
 class Envoi_Releve : AppCompatActivity() {
@@ -65,6 +66,14 @@ class Envoi_Releve : AppCompatActivity() {
                             laliste = relevesCRUD.readAllReleve()
                             CoroutineScope(Dispatchers.IO).launch {
                                 envoyerDonnees(laSocket, laliste)
+                            }
+
+                            CoroutineScope(Dispatchers.IO).launch {
+                                if (recevoirDeconnexion(laSocket) == "deconnexion"){
+                                    btEnvoyerCode.visibility = View.INVISIBLE
+                                    btEnvoyerDonnees.visibility = View.INVISIBLE
+                                    laSocket?.close()
+                                }
                             }
                         } else if (reponse == "nok") {
                             imgSignalOkNok.setImageResource(R.drawable.rouge)
@@ -145,6 +154,20 @@ class Envoi_Releve : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+
+    private suspend fun recevoirDeconnexion(socket: Socket?): String {
+        return try {
+            val inputStream = socket?.getInputStream()
+            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+            var codeDeconnexion = CharArray(11)
+            bufferedReader.read(codeDeconnexion,0,11)
+            String(codeDeconnexion)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }.toString()
     }
 
 }
