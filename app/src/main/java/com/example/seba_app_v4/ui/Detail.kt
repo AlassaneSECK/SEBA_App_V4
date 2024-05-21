@@ -28,7 +28,6 @@ class Detail : AppCompatActivity() {
         val releve = intent.getSerializableExtra("releve") as? Releve
 
         var lavaleur = intent.getSerializableExtra("valeur") as? Valeur
-        Toast.makeText(this, "La valeur est de : ${lavaleur?.laValeur}", Toast.LENGTH_LONG).show()
 
 
         binding.apply {
@@ -126,6 +125,54 @@ class Detail : AppCompatActivity() {
             substancesOrganiques.setText(releve?.substances_organiques)
             microsOrganismes.setText(releve?.micros_organismes)
             chlorophylle.setText(releve?.chlorophylle)
+
+
+
+            if (ph.text.toString() == "null" ) {
+                ph.isFocusable = false
+                ph.isClickable = false
+            }
+            if (debit.text.toString() == "null") {
+                debit.isFocusable = false
+                debit.isClickable = false
+            }
+            if (temperature.text.toString() == "null") {
+                temperature.isFocusable = false
+                temperature.isClickable = false
+            }
+            if (conductiviteElectrique.text.toString() == "null") {
+                conductiviteElectrique.isFocusable = false
+                conductiviteElectrique.isClickable = false
+            }
+            if (turbidite.text.toString() == "null") {
+                turbidite.isFocusable = false
+                turbidite.isClickable = false
+            }
+            if (niveauxOxygenDissous.text.toString() == "null") {
+                niveauxOxygenDissous.isFocusable = false
+                niveauxOxygenDissous.isClickable = false
+            }
+            if (nitratePhosphate.text.toString() == "null") {
+                nitratePhosphate.isFocusable = false
+                nitratePhosphate.isClickable = false
+            }
+            if (metauxLourd.text.toString() == "null") {
+                metauxLourd.isFocusable = false
+                metauxLourd.isClickable = false
+            }
+            if (substancesOrganiques.text.toString() == "null") {
+                substancesOrganiques.isFocusable = false
+                substancesOrganiques.isClickable = false
+            }
+            if (microsOrganismes.text.toString() == "null") {
+                microsOrganismes.isFocusable = false
+                microsOrganismes.isClickable = false
+            }
+            if (chlorophylle.text.toString() == "null") {
+                chlorophylle.isFocusable = false
+                chlorophylle.isClickable = false
+            }
+
 
             enregistrer.setOnClickListener {
                 val relevesCRUD = RelevesCRUD(this@Detail)

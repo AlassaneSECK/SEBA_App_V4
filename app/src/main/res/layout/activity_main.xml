@@ -17,42 +17,47 @@
             android:id="@+id/btConnexion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="444dp"
             android:text="CONNEXION"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:backgroundTint="@color/black"
-            android:textColor="@android:color/black"
-            android:imeOptions="actionNext"
             android:id="@+id/edtAddressIP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-500dp"
+
+            android:backgroundTint="@color/black"
             android:ems="10"
-            android:inputType="text"
             android:hint="IP"
-            app:layout_constraintBottom_toTopOf="@+id/btConnexion"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.036" />
 
         <EditText
             android:id="@+id/edtCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="484dp"
             android:backgroundTint="@color/black"
             android:ems="10"
             android:hint="Code de vérification"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@+id/btConnexion"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.116" />
 
         <Button
             android:id="@+id/btRemplir"
