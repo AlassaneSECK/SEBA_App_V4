@@ -1,6 +1,7 @@
 package com.michael.sqlite.bdd
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.example.seba_app_v4.modeles.Releve
 
@@ -24,6 +25,14 @@ class RelevesCRUD(cxt: Context) {
 
     fun close() {
         releves!!.close()
+    }
+    fun getnbrReleve(): Int{
+        val countQuery = "SELECT COUNT(*) FROM ${RelevesStructureDB.TABLE_MESURES}"
+        val cursor: Cursor = bdd!!.rawQuery(countQuery,null)
+        cursor.moveToFirst()
+        val count = cursor.getInt(0)
+        close()
+        return count
     }
 
     fun readAllReleve():ArrayList<Releve>{

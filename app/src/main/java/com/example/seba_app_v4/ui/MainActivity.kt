@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                                     envoyerResultat(connexion, "ok")
                                     val monobjet = recevoirJson(connexion)
                                     lifecycleScope.launch(Dispatchers.Main) {
+                                        suppressionRelevesPrecedent()
                                         enregistrementRecubdd(monobjet)
                                     }
                                 } else {
@@ -148,6 +149,13 @@ class MainActivity : AppCompatActivity() {
             if (leretourInsert == (-1).toLong()) {
                 Log.e("BDD", "erreur lors de l'insertion")
             }
+        }
+    }
+
+    private suspend fun suppressionRelevesPrecedent(){
+        val relevesCRUD = RelevesCRUD(this)
+        for (i in 0 until relevesCRUD.getnbrReleve()){
+            relevesCRUD.deleteReleve(i)
         }
     }
 }
