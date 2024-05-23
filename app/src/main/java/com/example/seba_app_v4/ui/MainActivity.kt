@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.seba_app_v4.R
@@ -30,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-//        binding.btValider.visibility = View.INVISIBLE
+        binding.btValider.visibility = View.INVISIBLE
+        binding.edtCode.visibility = View.INVISIBLE
         println("début")
         binding.apply {
             btConnexion.setOnClickListener {
@@ -38,9 +40,10 @@ class MainActivity : AppCompatActivity() {
                 val port = 1234
                 CoroutineScope(Dispatchers.IO).launch {
                     val connexion = seConnecterou(ip, port)
-                    //btValider.visibility = View.VISIBLE
                     btValider.setOnClickListener {
                         if (connexion != null) {
+                            binding.btValider.visibility = View.VISIBLE
+                            binding.edtCode.visibility = View.VISIBLE
                             CoroutineScope(Dispatchers.IO).launch {
                                 val leCodeRecu = recevoirCode(connexion)
                                 if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
