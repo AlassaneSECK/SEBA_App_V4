@@ -1,4 +1,5 @@
 package com.michael.sqlite.bdd
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -26,13 +27,13 @@ class RelevesCRUD(cxt: Context) {
     fun close() {
         releves!!.close()
     }
-    fun getnbrReleve(): Int{
-        val countQuery = "SELECT COUNT(*) FROM ${RelevesStructureDB.TABLE_MESURES}"
-        val cursor: Cursor = bdd!!.rawQuery(countQuery,null)
-        cursor.moveToFirst()
-        val count = cursor.getInt(0)
-        close()
-        return count
+    fun deleteAll(): Int{
+        var retour : Int = 0
+        var erreu = String()
+        openForRead()
+        val sql = "DELETE FROM table_mesures"
+        bdd!!.execSQL(sql)
+        return retour
     }
 
     fun readAllReleve():ArrayList<Releve>{

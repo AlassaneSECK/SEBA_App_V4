@@ -40,17 +40,21 @@ class MainActivity : AppCompatActivity() {
                 val port = 1234
                 CoroutineScope(Dispatchers.IO).launch {
                     val connexion = seConnecterou(ip, port)
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        binding.btValider.visibility = View.VISIBLE
+                        binding.edtCode.visibility = View.VISIBLE
+                    }
                     btValider.setOnClickListener {
                         if (connexion != null) {
-                            binding.btValider.visibility = View.VISIBLE
-                            binding.edtCode.visibility = View.VISIBLE
                             CoroutineScope(Dispatchers.IO).launch {
                                 val leCodeRecu = recevoirCode(connexion)
                                 if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
                                     envoyerResultat(connexion, "ok")
                                     val monobjet = recevoirJson(connexion)
-                                    lifecycleScope.launch(Dispatchers.Main) {
+                                    CoroutineScope(Dispatchers.IO).launch{
                                         suppressionRelevesPrecedent()
+                                    }
+                                    lifecycleScope.launch(Dispatchers.Main) {
                                         enregistrementRecubdd(monobjet)
                                     }
                                 } else {
@@ -157,9 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun suppressionRelevesPrecedent(){
         val relevesCRUD = RelevesCRUD(this)
-        for (i in 0 until relevesCRUD.getnbrReleve()){
-            relevesCRUD.deleteReleve(i)
-        }
+        val nbrReleve = relevesCRUD.deleteAll()
     }
 }
 
