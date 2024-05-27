@@ -8,7 +8,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.seba_app_v4.R
-import com.example.seba_app_v4.bddLocale.Releves
+import com.example.seba_app_v4.modeles.Releves
 import com.example.seba_app_v4.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
