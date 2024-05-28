@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.seba_app_v4.R
@@ -33,39 +34,57 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.btValider.visibility = View.INVISIBLE
         binding.edtCode.visibility = View.INVISIBLE
+        val regex: Regex = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?(\\.|\$)){4}".toRegex()
+        regex.matches("")
         println("début")
         binding.apply {
             btConnexion.setOnClickListener {
-                val ip = edtAddressIP.text.toString()
-                val port = 1234
-                CoroutineScope(Dispatchers.IO).launch {
-                    val connexion = seConnecterou(ip, port)
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        binding.btValider.visibility = View.VISIBLE
-                        binding.edtCode.visibility = View.VISIBLE
-                    }
-                    btValider.setOnClickListener {
-                        if (connexion != null) {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                val leCodeRecu = recevoirCode(connexion)
-                                if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
-                                    envoyerResultat(connexion, "ok")
-                                    val monobjet = recevoirJson(connexion)
-                                    CoroutineScope(Dispatchers.IO).launch{
-                                        suppressionRelevesPrecedent()
+                if (edtAddressIP.text.isNotEmpty()) {
+
+                    val ip = edtAddressIP.text.toString()
+                    val port = 1234
+                    if (regex.matches(ip)) {
+                        CoroutineScope(Dispatchers.IO).launch {
+
+                            val connexion = seConnecter(ip, port)
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                binding.btValider.visibility = View.VISIBLE
+                                binding.edtCode.visibility = View.VISIBLE
+                            }
+                            btValider.setOnClickListener {
+                                if (connexion != null) {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        val leCodeRecu = recevoirCode(connexion)
+                                        if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
+                                            envoyerResultat(connexion, "ok")
+                                            val monobjet = recevoirJson(connexion)
+                                            CoroutineScope(Dispatchers.IO).launch {
+                                                suppressionCampagnePrecedente()
+                                            }
+                                            lifecycleScope.launch(Dispatchers.Main) {
+                                                enregistrementRecubdd(monobjet)
+                                            }
+                                        } else {
+                                            envoyerResultat(connexion, "nok")
+                                            connexion.close()
+                                        }
                                     }
-                                    lifecycleScope.launch(Dispatchers.Main) {
-                                        enregistrementRecubdd(monobjet)
-                                    }
-                                } else {
-                                    envoyerResultat(connexion, "nok")
-                                    connexion.close()
                                 }
                             }
                         }
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Entrez le bon format d'adresse ip",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-
+                } else {
+                    Toast.makeText(
+                        this@MainActivity, "Remplissez d'abord l'adress ip", Toast.LENGTH_LONG
+                    ).show()
                 }
+
             }
         }
 
@@ -75,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun seConnecterou(ADDRESS: String, PORT: Int): Socket? {
+    private suspend fun seConnecter(ADDRESS: String, PORT: Int): Socket? {
         val connexion = Socket(ADDRESS, PORT)
         return if (connexion.isConnected) {
             connexion
@@ -85,14 +104,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private suspend fun recevoirCode(socket: Socket): String{
+    private suspend fun recevoirCode(socket: Socket): String {
         return try {
             val inputStrem = socket.getInputStream()
             val bufferedReader = BufferedReader(InputStreamReader(inputStrem))
             val codeArray = CharArray(4)
             bufferedReader.read(codeArray, 0, 4)
             String(codeArray)
-        }catch (e: IOException){
+        } catch (e: IOException) {
             e.printStackTrace()
             null
         }.toString()
@@ -159,9 +178,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun suppressionRelevesPrecedent(){
+    private suspend fun suppressionCampagnePrecedente() {
         val relevesCRUD = RelevesCRUD(this)
-        val nbrReleve = relevesCRUD.deleteAll()
+        relevesCRUD.deleteAll()
     }
 }
 

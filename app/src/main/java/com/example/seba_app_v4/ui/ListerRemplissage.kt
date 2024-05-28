@@ -43,8 +43,6 @@ class ListerRemplissage : AppCompatActivity() {
                     Log.e("BDD", e.toString())
                 }
             }
-
-
             btsendCampagne.setOnClickListener {
                 squareContainer.visibility = View.VISIBLE
                 listView.visibility = View.INVISIBLE

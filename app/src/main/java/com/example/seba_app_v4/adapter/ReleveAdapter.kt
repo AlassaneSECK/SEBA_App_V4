@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.example.seba_app_v4.R
 import com.example.seba_app_v4.modeles.Releve
 
-class ReleveAdapter (context : Context, relevebdds: List<Releve>) : ArrayAdapter<Releve>(context, 0 , relevebdds) {
+class ReleveAdapter (context : Context, relevebdd: List<Releve>) : ArrayAdapter<Releve>(context, 0 , relevebdd) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val releve = getItem(position)
 
