@@ -20,7 +20,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
-import java.lang.reflect.Array
+import java.net.InetSocketAddress
 import java.net.Socket
 
 class Envoi_Releve : AppCompatActivity() {
@@ -31,20 +31,50 @@ class Envoi_Releve : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_envoi_releve)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_envoi_releve)
+        val regex: Regex = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?(\\.|\$)){4}".toRegex()
         binding.apply {
             btEnvoyerCode.visibility = View.INVISIBLE
             btEnvoyerDonnees.visibility = View.INVISIBLE
+            var flag = true
             btConnexionSend.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    laSocket = seConnecterouDeconnecter(edtIP.text.toString(), 1234)
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        if (laSocket == null) {
-                            imgSignalConnection.setImageResource(R.drawable.rouge)
-                        } else {
-                            imgSignalConnection.setImageResource(R.drawable.vert)
-                            btEnvoyerCode.visibility = View.VISIBLE
+                if (regex.matches(edtIP.text)) {
+                    if (edtIP.text.isNotEmpty()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                laSocket = seConnecter(edtIP.text.toString(), 1234)
+                            } catch (e: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@Envoi_Releve, "erreur de connexion : $e", Toast.LENGTH_LONG).show()
+                                }
+                                flag = false
+                            }
+                            if (!flag){
+                                btConnexionSend.visibility = View.VISIBLE
+                            }else{
+                                btConnexionSend.visibility = View.INVISIBLE
+                            }
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                if (laSocket == null) {
+                                    imgSignalConnection.setImageResource(R.drawable.rouge)
+                                } else {
+                                    imgSignalConnection.setImageResource(R.drawable.vert)
+                                    btEnvoyerCode.visibility = View.VISIBLE
+                                }
+                            }
                         }
+                    } else {
+                        Toast.makeText(
+                            this@Envoi_Releve,
+                            "Remplissez d'abord l'adresse ip",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+                } else {
+                    Toast.makeText(
+                        this@Envoi_Releve,
+                        "Entrez le bon format d'adresse ip",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
@@ -55,13 +85,13 @@ class Envoi_Releve : AppCompatActivity() {
                     envoyerCode(laSocket, leCode)
                 }
                 btEnvoyerDonnees.visibility = View.VISIBLE
+                btEnvoyerCode.visibility = View.INVISIBLE
             }
             btEnvoyerDonnees.setOnClickListener {
                 CoroutineScope(Dispatchers.IO).launch {
                     val reponse = recevoirReponse(laSocket)
                     withContext(Dispatchers.Main) {
                         if (reponse == "ok") {
-                            imgSignalOkNok.setImageResource(R.drawable.vert)
                             val relevesCRUD = RelevesCRUD(this@Envoi_Releve)
                             laliste = relevesCRUD.readAllReleve()
                             CoroutineScope(Dispatchers.IO).launch {
@@ -69,14 +99,13 @@ class Envoi_Releve : AppCompatActivity() {
                             }
 
                             CoroutineScope(Dispatchers.IO).launch {
-                                if (recevoirDeconnexion(laSocket) == "deconnexion"){
+                                if (recevoirDeconnexion(laSocket) == "deconnexion") {
                                     btEnvoyerCode.visibility = View.INVISIBLE
                                     btEnvoyerDonnees.visibility = View.INVISIBLE
                                     laSocket?.close()
                                 }
                             }
                         } else if (reponse == "nok") {
-                            imgSignalOkNok.setImageResource(R.drawable.rouge)
                             Toast.makeText(this@Envoi_Releve, "CODE PAS BON", Toast.LENGTH_LONG)
                                 .show()
                         } else {
@@ -88,22 +117,29 @@ class Envoi_Releve : AppCompatActivity() {
                         }
                     }
                 }
+                lifecycleScope.launch(Dispatchers.Main){
+                    btConnexionSend.visibility = View.VISIBLE
+                    btEnvoyerDonnees.visibility = View.INVISIBLE
+                    imgSignalConnection.setImageDrawable(null)
+                    tvCode.setText("")
+                }
             }
 
 
 
             imgBtAnnuler.setOnClickListener {
-                laSocket?.close()
+                laSocket!!.close()
                 finish()
             }
         }
 
     }
 
-    private suspend fun seConnecterouDeconnecter(ADDRESS: String, PORT: Int): Socket? {
-        val connexion = Socket(ADDRESS, PORT)
-        return if (connexion.isConnected) {
-            connexion
+    private suspend fun seConnecter(ADDRESS: String, PORT: Int): Socket? {
+        val socket = Socket()
+        socket.connect(InetSocketAddress(ADDRESS,PORT),2000)
+        return if (socket.isConnected) {
+            socket
         } else {
             null
         }
@@ -151,8 +187,10 @@ class Envoi_Releve : AppCompatActivity() {
             val writer = PrintWriter(OutputStreamWriter(connexion?.getOutputStream()))
             writer.println(listeJson)
             writer.flush()
+            socket!!.close()
         } catch (e: IOException) {
             e.printStackTrace()
+            socket!!.close()
         }
     }
 
@@ -162,7 +200,7 @@ class Envoi_Releve : AppCompatActivity() {
             val inputStream = socket?.getInputStream()
             val bufferedReader = BufferedReader(InputStreamReader(inputStream))
             var codeDeconnexion = CharArray(11)
-            bufferedReader.read(codeDeconnexion,0,11)
+            bufferedReader.read(codeDeconnexion, 0, 11)
             String(codeDeconnexion)
         } catch (e: IOException) {
             e.printStackTrace()

@@ -18,16 +18,19 @@ import com.michael.sqlite.bdd.RelevesCRUD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.lang.StringBuilder
+import java.net.InetSocketAddress
 import java.net.Socket
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var connexion : Socket
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,38 +38,58 @@ class MainActivity : AppCompatActivity() {
         binding.btValider.visibility = View.INVISIBLE
         binding.edtCode.visibility = View.INVISIBLE
         val regex: Regex = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?(\\.|\$)){4}".toRegex()
-        regex.matches("")
-        println("début")
         binding.apply {
             btConnexion.setOnClickListener {
                 if (edtAddressIP.text.isNotEmpty()) {
 
                     val ip = edtAddressIP.text.toString()
                     val port = 1234
+                    var flag = true
                     if (regex.matches(ip)) {
                         CoroutineScope(Dispatchers.IO).launch {
-
-                            val connexion = seConnecter(ip, port)
-                            lifecycleScope.launch(Dispatchers.Main) {
-                                binding.btValider.visibility = View.VISIBLE
-                                binding.edtCode.visibility = View.VISIBLE
+                            try {
+                                connexion = seConnecter(ip, port)!!
+                            }catch (e: Exception){
+                                withContext(Dispatchers.Main){
+                                    Toast.makeText(this@MainActivity, "erreur de connexion : $e", Toast.LENGTH_LONG).show()
+                                }
+                                flag = false
                             }
+
+                            if (!flag){
+                                lifecycleScope.launch(Dispatchers.Main) {
+                                    btValider.visibility = View.INVISIBLE
+                                    edtCode.visibility = View.INVISIBLE
+                                    btConnexion.visibility = View.VISIBLE
+                                }
+                            }else{
+                                lifecycleScope.launch(Dispatchers.Main) {
+                                    btValider.visibility = View.VISIBLE
+                                    edtCode.visibility = View.VISIBLE
+                                    btConnexion.visibility = View.INVISIBLE
+                                }
+                            }
+
                             btValider.setOnClickListener {
                                 if (connexion != null) {
                                     CoroutineScope(Dispatchers.IO).launch {
-                                        val leCodeRecu = recevoirCode(connexion)
-                                        if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
-                                            envoyerResultat(connexion, "ok")
-                                            val monobjet = recevoirJson(connexion)
-                                            CoroutineScope(Dispatchers.IO).launch {
-                                                suppressionCampagnePrecedente()
+                                        if (edtCode.text.toString().isNotEmpty()){
+                                            val leCodeRecu = recevoirCode(connexion)
+                                            if (leCodeRecu.toInt() == edtCode.text.toString().toInt()) {
+                                                envoyerResultat(connexion, "ok")
+                                                val monobjet = recevoirJson(connexion)
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    suppressionCampagnePrecedente()
+                                                }
+                                                lifecycleScope.launch(Dispatchers.Main) {
+                                                    enregistrementRecubdd(monobjet)
+                                                }
+                                            } else {
+                                                envoyerResultat(connexion, "nok")
+                                                connexion.close()
                                             }
-                                            lifecycleScope.launch(Dispatchers.Main) {
-                                                enregistrementRecubdd(monobjet)
-                                            }
-                                        } else {
-                                            envoyerResultat(connexion, "nok")
-                                            connexion.close()
+                                        }else{
+                                            Toast.makeText(this@MainActivity,"remplissez d'abord le code", Toast.LENGTH_LONG).show()
                                         }
                                     }
                                 }
@@ -95,9 +118,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun seConnecter(ADDRESS: String, PORT: Int): Socket? {
-        val connexion = Socket(ADDRESS, PORT)
-        return if (connexion.isConnected) {
-            connexion
+        val socket = Socket()
+        socket.connect(InetSocketAddress(ADDRESS,PORT), 2000)
+        return if (socket.isConnected) {
+            socket
         } else {
             null
         }
