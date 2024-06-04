@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                                     btConnexion.visibility = View.INVISIBLE
                                 }
                             }
-
                             btValider.setOnClickListener {
                                 if (connexion != null) {
                                     CoroutineScope(Dispatchers.IO).launch {
@@ -83,6 +82,10 @@ class MainActivity : AppCompatActivity() {
                                                 }
                                                 lifecycleScope.launch(Dispatchers.Main) {
                                                     enregistrementRecubdd(monobjet)
+                                                    btValider.visibility = View.INVISIBLE
+                                                    btConnexion.visibility = View.VISIBLE
+                                                    edtCode.setText("")
+                                                    edtCode.visibility = View.INVISIBLE
                                                 }
                                             } else {
                                                 envoyerResultat(connexion, "nok")
@@ -92,6 +95,8 @@ class MainActivity : AppCompatActivity() {
                                             Toast.makeText(this@MainActivity,"remplissez d'abord le code", Toast.LENGTH_LONG).show()
                                         }
                                     }
+                                }else{
+                                    Toast.makeText(this@MainActivity, "Connexion au serveur échouée", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }

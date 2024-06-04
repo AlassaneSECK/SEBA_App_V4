@@ -19,7 +19,7 @@ import java.util.Date
 
 class Detail : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    val valeur: Valeur? = null
+    var valeur: Valeur? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -27,7 +27,7 @@ class Detail : AppCompatActivity() {
 
         val releve = intent.getSerializableExtra("releve") as? Releve
 
-        var lavaleur = intent.getSerializableExtra("valeur") as? Valeur
+        valeur = intent.getSerializableExtra("valeur") as? Valeur
 
 
         binding.apply {
@@ -35,82 +35,82 @@ class Detail : AppCompatActivity() {
 
             nom.isFocusable = false
             nom.isClickable = false
-            findAllEditText(rootView,lavaleur?.laValeur.toString())
+            findAllEditText(rootView,valeur?.laValeur.toString())
 
 
             ph.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    ph.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    ph.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             debit.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    debit.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    debit.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             temperature.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    temperature.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    temperature.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             conductiviteElectrique.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    conductiviteElectrique.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    conductiviteElectrique.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             turbidite.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    turbidite.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    turbidite.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             niveauxOxygenDissous.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    niveauxOxygenDissous.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    niveauxOxygenDissous.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             nitratePhosphate.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    nitratePhosphate.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    nitratePhosphate.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             metauxLourd.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    metauxLourd.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    metauxLourd.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             substancesOrganiques.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    substancesOrganiques.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    substancesOrganiques.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
 
             microsOrganismes.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    microsOrganismes.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    microsOrganismes.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
             chlorophylle.onFocusChangeListener = View.OnFocusChangeListener { view, hasfocus ->
                 if (hasfocus){
-                    chlorophylle.setText(lavaleur?.laValeur)
-                    lavaleur = Valeur("")
+                    chlorophylle.setText(valeur?.laValeur)
+                    valeur = Valeur("")
                 }
             }
             nom.setText(releve?.nom)
@@ -238,6 +238,10 @@ class Detail : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     private fun findAllEditText(view: View, lavaleur : String?) {
