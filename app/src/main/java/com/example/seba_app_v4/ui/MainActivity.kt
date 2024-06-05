@@ -88,8 +88,13 @@ class MainActivity : AppCompatActivity() {
                                                     edtCode.visibility = View.INVISIBLE
                                                 }
                                             } else {
-                                                envoyerResultat(connexion, "nok")
-                                                connexion.close()
+                                                lifecycleScope.launch(Dispatchers.Main) {
+                                                    Toast.makeText(this@MainActivity,"Code erroné",Toast.LENGTH_LONG).show()
+                                                }.join()
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    envoyerResultat(connexion, "nok")
+                                                    connexion.close()
+                                                }
                                             }
                                         }else{
                                             Toast.makeText(this@MainActivity,"remplissez d'abord le code", Toast.LENGTH_LONG).show()
