@@ -27,6 +27,7 @@
                     android:id="@+id/rootView">
 
                     <LinearLayout
+                        android:id="@+id/idGlieu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -34,7 +35,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/nom"/>
+                            android:text="@string/nom" />
 
                         <EditText
                             android:id="@+id/nom"
@@ -47,6 +48,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/idGph"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -54,7 +56,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/ph"/>
+                            android:text="@string/ph" />
 
                         <EditText
                             android:id="@+id/ph"
@@ -66,6 +68,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/idGdebit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -73,7 +76,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/debit"/>
+                            android:text="@string/debit" />
 
                         <EditText
                             android:id="@+id/debit"
@@ -84,6 +87,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/idGtemp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -91,7 +95,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/temperature"/>
+                            android:text="@string/temperature" />
 
                         <EditText
                             android:id="@+id/temperature"
@@ -103,6 +107,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/idGCE"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -110,7 +115,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/conductivite_electrique"/>
+                            android:text="@string/conductivite_electrique" />
 
                         <EditText
                             android:id="@+id/conductivite_electrique"
@@ -123,6 +128,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/id_g_turb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -130,7 +136,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/turbidite"/>
+                            android:text="@string/turbidite" />
 
                         <EditText
                             android:id="@+id/turbidite"
@@ -143,6 +149,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/idGNOD"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -150,7 +157,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/niveaux_oxygen_dissous"/>
+                            android:text="@string/niveaux_oxygen_dissous" />
 
                         <EditText
                             android:id="@+id/niveaux_oxygen_dissous"
@@ -163,6 +170,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/idGNP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -170,7 +178,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/nitrate_phosphate"/>
+                            android:text="@string/nitrate_phosphate" />
 
                         <EditText
                             android:id="@+id/nitrate_phosphate"
@@ -183,8 +191,8 @@
                     </LinearLayout>
 
 
-
                     <LinearLayout
+                        android:id="@+id/idGML"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -192,7 +200,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/metaux_lourd"/>
+                            android:text="@string/metaux_lourd" />
 
                         <EditText
                             android:id="@+id/metaux_lourd"
@@ -206,6 +214,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/idGSO"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -213,7 +222,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/substances_organiques"/>
+                            android:text="@string/substances_organiques" />
 
                         <EditText
                             android:id="@+id/substances_organiques"
@@ -227,6 +236,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/idGMO"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -234,7 +244,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/micros_organismes"/>
+                            android:text="@string/micros_organismes" />
 
                         <EditText
                             android:id="@+id/micros_organismes"
@@ -243,7 +253,9 @@
                             android:clickable="true"
                             android:inputType="numberDecimal" />
                     </LinearLayout>
+
                     <LinearLayout
+                        android:id="@+id/idGChlorophylle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -251,7 +263,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/chlorophylle"/>
+                            android:text="@string/chlorophylle" />
 
                         <EditText
                             android:id="@+id/chlorophylle"

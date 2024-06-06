@@ -1,6 +1,7 @@
 package com.example.seba_app_v4.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -131,46 +132,57 @@ class Detail : AppCompatActivity() {
             if (ph.text.toString() == "null" ) {
                 ph.isFocusable = false
                 ph.isClickable = false
+                idGph.setBackgroundColor(Color.RED)
             }
             if (debit.text.toString() == "null") {
                 debit.isFocusable = false
                 debit.isClickable = false
+                idGdebit.setBackgroundColor(Color.RED)
             }
             if (temperature.text.toString() == "null") {
                 temperature.isFocusable = false
                 temperature.isClickable = false
+                idGtemp.setBackgroundColor(Color.RED)
             }
             if (conductiviteElectrique.text.toString() == "null") {
                 conductiviteElectrique.isFocusable = false
                 conductiviteElectrique.isClickable = false
+                idGCE.setBackgroundColor(Color.RED)
             }
             if (turbidite.text.toString() == "null") {
                 turbidite.isFocusable = false
                 turbidite.isClickable = false
+                idGTurb.setBackgroundColor(Color.RED)
             }
             if (niveauxOxygenDissous.text.toString() == "null") {
                 niveauxOxygenDissous.isFocusable = false
                 niveauxOxygenDissous.isClickable = false
+                idGNOD.setBackgroundColor(Color.RED)
             }
             if (nitratePhosphate.text.toString() == "null") {
                 nitratePhosphate.isFocusable = false
                 nitratePhosphate.isClickable = false
+                idGNP.setBackgroundColor(Color.RED)
             }
             if (metauxLourd.text.toString() == "null") {
                 metauxLourd.isFocusable = false
                 metauxLourd.isClickable = false
+                idGML.setBackgroundColor(Color.RED)
             }
             if (substancesOrganiques.text.toString() == "null") {
                 substancesOrganiques.isFocusable = false
                 substancesOrganiques.isClickable = false
+                idGSO.setBackgroundColor(Color.RED)
             }
             if (microsOrganismes.text.toString() == "null") {
                 microsOrganismes.isFocusable = false
                 microsOrganismes.isClickable = false
+                idGMO.setBackgroundColor(Color.RED)
             }
             if (chlorophylle.text.toString() == "null") {
                 chlorophylle.isFocusable = false
                 chlorophylle.isClickable = false
+                idGChlorophylle.setBackgroundColor(Color.RED)
             }
 
 
